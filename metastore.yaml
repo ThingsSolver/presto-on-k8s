@@ -31,13 +31,13 @@ spec:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
-              key: access-key
+              name: solver-bucket
+              key: AWS_ACCESS_KEY_ID
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
-              key: secret-key
+              name: solver-bucket
+              key: AWS_SECRET_ACCESS_KEY
         ports:
         - containerPort: 9083
         volumeMounts:
@@ -58,3 +58,5 @@ spec:
         - name: metastore-cfg-vol
           configMap:
             name: metastore-cfg
+      imagePullSecrets:
+      - name: regcred
