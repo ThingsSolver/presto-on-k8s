@@ -2,10 +2,10 @@
 
 set -e
 
-REPONAME=joshuarobinson
+REPONAME=thingsolver
 TAG=hivemetastore
 
-docker build -t $TAG .
+docker build -t $TAG:latest .
 
 # Tag and push to the public docker repository.
 docker tag $TAG $REPONAME/$TAG
