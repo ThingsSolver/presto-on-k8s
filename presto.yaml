@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: metastore
-        image: joshuarobinson/fb-presto
+        image: thingsolver/fb-presto
         ports:
         - containerPort: 8080
         env:
@@ -78,7 +78,7 @@ spec:
     spec:
       containers:
       - name: metastore
-        image: joshuarobinson/fb-presto
+        image: thingsolver/fb-presto
         ports:
         - containerPort: 8080
         env:
@@ -107,8 +107,8 @@ spec:
         command: ['/opt/autoconfig_and_launch.sh']
         resources:
           requests:
-            memory: "64G"
-            cpu: 12
+            memory: "16G"
+            cpu: 4
         imagePullPolicy: Always
       volumes:
         - name: presto-cfg-vol
@@ -132,7 +132,7 @@ metadata:
 spec:
   containers:
   - name: presto-cli
-    image: joshuarobinson/presto-cli
+    image: thingsolver/presto-cli
     command: ["tail", "-f", "/dev/null"]
     imagePullPolicy: Always
   restartPolicy: Always

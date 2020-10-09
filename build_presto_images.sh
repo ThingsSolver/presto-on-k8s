@@ -2,8 +2,8 @@
 
 set -e
 
-REPONAME=joshuarobinson
-PRESTOVER=337
+REPONAME=thingsolver
+PRESTOVER=343
 
 ## Build Presto-server
 
