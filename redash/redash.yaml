@@ -89,18 +89,6 @@ spec:
         args: ["worker"]
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pgredash-pv-claim
-spec:
-  storageClassName: pure-block
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Ti
----
-apiVersion: v1
 kind: Service
 metadata:
   name: redash

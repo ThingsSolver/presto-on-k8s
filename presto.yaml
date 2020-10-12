@@ -8,6 +8,7 @@ spec:
   - port: 8080
   selector:
     app: presto-coordinator
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,13 +34,13 @@ spec:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
-              key: access-key
+              name: solver-bucket
+              key: AWS_ACCESS_KEY_ID
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
-              key: secret-key
+              name: solver-bucket
+              key: AWS_SECRET_ACCESS_KEY
         volumeMounts:
         - name: presto-cfg-vol
           mountPath: opt/presto-server/etc/config.properties
@@ -53,13 +54,16 @@ spec:
         command: ['/opt/autoconfig_and_launch.sh']
         resources:
           requests:
-            memory: "16G"
-            cpu: 4
+            memory: "8G"
+            cpu: 2
         imagePullPolicy: Always
       volumes:
         - name: presto-cfg-vol
           configMap:
             name: presto-cfg
+      imagePullSecrets:
+      - name: regcred
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -67,7 +71,7 @@ metadata:
   name: presto-worker
 spec:
   serviceName: presto-worker 
-  replicas: 24
+  replicas: 2
   selector:
     matchLabels:
       app: presto-worker
@@ -85,13 +89,13 @@ spec:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
-              key: access-key
+              name: solver-bucket
+              key: AWS_ACCESS_KEY_ID
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
-              key: secret-key
+              name: solver-bucket
+              key: AWS_SECRET_ACCESS_KEY
         volumeMounts:
         - name: presto-cfg-vol
           mountPath: opt/presto-server/etc/config.properties
@@ -107,23 +111,26 @@ spec:
         command: ['/opt/autoconfig_and_launch.sh']
         resources:
           requests:
-            memory: "16G"
-            cpu: 4
+            memory: "8G"
+            cpu: 2
         imagePullPolicy: Always
       volumes:
         - name: presto-cfg-vol
           configMap:
             name: presto-cfg
+      imagePullSecrets:
+      - name: regcred
   volumeClaimTemplates:
   - metadata:
       name: presto-tmp-data
     spec:
-      storageClassName: pure-file
+      storageClassName: rook-cephfs
       accessModes:
       - ReadWriteMany
       resources:
         requests:
-          storage: 8Ti
+          storage: 5Gi
+
 ---
 apiVersion: v1
 kind: Pod
@@ -136,3 +143,5 @@ spec:
     command: ["tail", "-f", "/dev/null"]
     imagePullPolicy: Always
   restartPolicy: Always
+  imagePullSecrets:
+  - name: regcred
