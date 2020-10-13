@@ -26,7 +26,7 @@ spec:
         app: presto-coordinator
     spec:
       containers:
-      - name: metastore
+      - name: presto-coordinator
         image: thingsolver/fb-presto
         ports:
         - containerPort: 8080
@@ -54,8 +54,8 @@ spec:
         command: ['/opt/autoconfig_and_launch.sh']
         resources:
           requests:
-            memory: "8G"
-            cpu: 2
+            memory: "16Gi"
+            cpu: 4
         imagePullPolicy: Always
       volumes:
         - name: presto-cfg-vol
