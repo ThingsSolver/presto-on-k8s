@@ -51,8 +51,8 @@ spec:
         args: ["-p", "9083"]
         resources:
           requests:
-            memory: "8G"
-            cpu: 4
+            memory: "16Gi"
+            cpu: 8
         imagePullPolicy: Always
       volumes:
         - name: metastore-cfg-vol

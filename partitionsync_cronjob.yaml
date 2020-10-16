@@ -33,10 +33,10 @@ spec:
               - name: presto-scripts-vol
                 mountPath: /opt/presto-sync.sh
                 subPath: presto-sync.sh
-          imagePullSecrets:
-          - name: regcred
           volumes:
           - name: presto-scripts-vol
             configMap:
               name: presto-sync-scripts
           restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: regcred

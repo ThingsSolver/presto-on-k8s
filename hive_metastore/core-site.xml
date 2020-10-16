@@ -5,10 +5,10 @@
     </property>
     <property>
 	<name>fs.s3a.endpoint</name>
-	<value>10.62.64.200</value>
+	<value>solver-storage.thingsolver.com</value>
     </property>
     <property>
 	<name>fs.s3a.fast.upload</name>
-	<value>true</value>
+	<value>false</value>
     </property>
 </configuration>
